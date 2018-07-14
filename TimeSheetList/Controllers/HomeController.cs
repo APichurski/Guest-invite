@@ -38,12 +38,33 @@ namespace TimeSheetList.Controllers
             return Ok(ob1);
 
 
-            
+         }
+        [Route("api/2")]
+        [HttpPost]
+        public IActionResult RecevingData(GuestResponse oneguest)
+        {
+            string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase("PartyCard");
+            var collection = database.GetCollection<GuestResponse>("NumberOfguest");
 
-            }
+            return Ok(collection.InsertOneAsync(oneguest));
         }
 
-        
-        
-    }
+        }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
