@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using TimeSheetList.Models;
 
 namespace TimeSheetList.Controllers
 {
@@ -22,16 +23,27 @@ namespace TimeSheetList.Controllers
         }
 
         [Route("api/1")]
-        public IActionResult Test(string name,string surname,int number,bool choice)
+        public IActionResult Test()
         {
-            GuestResponse ob1 = new GuestResponse { Id = 300 };
-            var client = new MongoClient();
+           
+
+            string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
+
+
+            GuestResponse ob1 = new GuestResponse { Name = "777777777" };
+            var client = new MongoClient(connectionString);
             var database = client.GetDatabase("PartyCard");
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
             collection.InsertOneAsync(ob1);
             return Ok(ob1);
+
+
+            
+
+            }
         }
 
         
+        
     }
-}
+
