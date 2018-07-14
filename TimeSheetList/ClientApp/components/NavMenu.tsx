@@ -12,25 +12,25 @@ export class NavMenu extends React.Component<{}, {}> {
                         <span className='icon-bar'></span>
                         <span className='icon-bar'></span>
                     </button>
-                    <Link className='navbar-brand '  to={ '/' }>TimeSheetList</Link>
+                    <Link className='navbar-brand '  to={ '/' }>Party Maker</Link>
                 </div>
                 <div className='clearfix'></div>
                 <div className='navbar-collapse collapse'>
                     <ul className='nav navbar-nav'>
                         <li>
                             <NavLink to={ '/' } exact activeClassName='active'>
-                                <span className='glyphicon glyphicon-home'></span> Home
+                                <span className='glyphicon glyphicon-home'></span> Visiting Card
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to={ '/counter' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-education'></span> Home2
+                                <span className='glyphicon glyphicon-education'></span> Guest List
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={ '/fetchdata' } activeClassName='active'>
-                                <span className='glyphicon glyphicon-th-list'></span> Home3
-                            </NavLink>
+                            {/*<NavLink to={'/fetchdata'} activeclassname='active'>
+                                <span classname='glyphicon glyphicon-th-list'></span> home3
+                            </NavLink>*/}
                         </li>
                     </ul>
                 </div>

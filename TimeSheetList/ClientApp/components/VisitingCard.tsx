@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
-export class Home extends React.Component<RouteComponentProps<{}>, {}> {
+export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
     public render() {
         return <div>
-            <p>Nic tu nie ma jeszcze</p>
+            <h1>Strona z wizytowka do wypelnienia</h1>
         </div>;
     }
 }
