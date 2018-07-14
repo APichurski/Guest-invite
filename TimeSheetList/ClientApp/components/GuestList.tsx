@@ -5,7 +5,7 @@ interface CounterState {
     currentCount: number;
 }
 
-export class Counter extends React.Component<RouteComponentProps<{}>, CounterState> {
+export class GuestList extends React.Component<RouteComponentProps<{}>, CounterState> {
     constructor() {
         super();
         this.state = { currentCount: 0 };
@@ -13,13 +13,7 @@ export class Counter extends React.Component<RouteComponentProps<{}>, CounterSta
 
     public render() {
         return <div>
-            <h1>Counter</h1>
-
-            <p>This is a simple example of a React component.</p>
-
-            <p>Current count: <strong>{ this.state.currentCount }</strong></p>
-
-            <button onClick={ () => { this.incrementCounter() } }>Increment</button>
+          <h1>GuestList </h1>
         </div>;
     }
 
