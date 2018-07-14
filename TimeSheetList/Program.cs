@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
 
 namespace TimeSheetList
 {
@@ -15,6 +16,8 @@ namespace TimeSheetList
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
+            var client = new MongoClient();
+            var database = client.GetDatabase("PartyCard");
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
