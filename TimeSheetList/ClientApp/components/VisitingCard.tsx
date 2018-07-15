@@ -9,7 +9,7 @@ export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
         var request = new XMLHttpRequest();
         request.open('POST', '/api/2', true);
         request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        request.send('{"Name": "Kamil"}');
+        request.send('{"Name": "Kamil","Surname": "sad","Phone": 34432,"WillAttend": true}');
     }
 
     public render() {
