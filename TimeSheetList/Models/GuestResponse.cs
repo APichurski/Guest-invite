@@ -9,7 +9,7 @@ namespace TimeSheetList.Models
 {
     public class GuestResponse
     {
-        public Object Id { get; set; } = 2;
+        public Object Id { get; set; } 
         [Required(ErrorMessage = "Please enter your name")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Please enter your surname")]

@@ -4,7 +4,8 @@ import 'isomorphic-fetch';
 
 interface FetchDataAboutGuests {
     guests: Guest[];
-    loading: boolean;
+    loading: boolean
+   
 }
 
 var i = 0;
@@ -25,12 +26,10 @@ function deleteGuest(z: any) {
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
 
-    request.onload = function () {
-      // do something to response
-      // console.log(request.responseText);
-    };
+ 
 
-   request.send('{"Name":"' + name + '", "Surname":"' + surname + '", "Phone":"' + phone + '", "WillAttend":"' + attendace + '" }');
+    request.send('{"Name":"' + name + '", "Surname":"' + surname + '", "Phone":"' + phone + '", "WillAttend":"' + attendace + '" }');
+    
 }
 
 
@@ -40,6 +39,7 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
         this.state = {
             guests: [],
             loading: true
+          
         };
 
 
@@ -83,7 +83,7 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
                         <td>{guest.surname}</td>
                         <td>{guest.phone}</td>
                         <td>{JSON.stringify(guest.willAttend)}</td>
-                        <td><button type="button" onClick={deleteGuest} className="btn btn-danger"><span className="glyphicon glyphicon-trash"></span></button></td>
+                        <td><button type="button" onClick={deleteGuest} className="btn btn-danger glyphicon glyphicon-trash"></button></td>
                     </tr>
                 )}
             </tbody>
