@@ -9,13 +9,13 @@ namespace TimeSheetList.Models
     public class GuestResponse
     {
         [Required(ErrorMessage = "Please enter your name")]
-        private string Name { get; set; }
+        public string Name { get; set; }
         [Required(ErrorMessage = "Please enter your surname")]
-        private string Surname { get; set; }
+        public string Surname { get; set; }
         [Required(ErrorMessage = "Please enter your phone number")]
-        private int Phone { get; set; }
+        public int Phone { get; set; }
         [Required(ErrorMessage = "Please enter your choice")]
-        private bool WillAttend { get; set; }
+        public bool WillAttend { get; set; }
 
     }
 }
