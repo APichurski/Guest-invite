@@ -4,10 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using TimeSheetList.Models;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace TimeSheetList.Controllers
 {
@@ -24,15 +22,15 @@ namespace TimeSheetList.Controllers
             return View();
         }
 
-        [Route("add")]
-        public IActionResult Add(GuestResponse guest)
+        [Route("api/1")]
+        public IActionResult Test()
         {
            
 
             string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
 
 
-            GuestResponse ob1 = new GuestResponse();
+            GuestResponse ob1 = new GuestResponse { Name = "777777777" };
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("PartyCard");
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
@@ -40,55 +38,33 @@ namespace TimeSheetList.Controllers
             return Ok(ob1);
 
 
-            
-
-        }
-
-
-        [Route("search")]
-        public IActionResult Search(string _imie)
+         }
+        [Route("api/2")]
+        [HttpPost]
+        public IActionResult RecevingData([FromBody]GuestResponse oneguest)
         {
-
-
             string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
-            _imie = "Kamil";
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("PartyCard");
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-                        
-            var builder = Builders<GuestResponse>.Filter;
-            var filter = builder.Eq("Name", _imie);
-            var result = collection.Find(filter).ToList();
-
-
-            return Ok(result);
+           collection.InsertOneAsync(oneguest);
+            return Ok(oneguest);
+        }
 
         }
 
 
-
-        //[Route("delete")]
-        //public IActionResult Delete(string Name,string Surname,int Phone,bool WillAttend)
-        //{
+}
 
 
-        //    string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
-
-        //    var client = new MongoClient(connectionString);
-        //    var database = client.GetDatabase("PartyCard");
-        //    var collection = database.GetCollection<BsonDocument>("NumberOfguest");
-
-        //    var builder = Builders<BsonDocument>.Filter;
-        //    var filter = Builders<BsonDocument>.Filter.Eq(builder.Eq("Name", Name), builder.Eq("Surname",Surname), builder.Eq("Phone",Phone), builder.Eq("WillAttend",WillAttend));
-        //    var result = collection.DeleteMany(filter);
 
 
-        //    return Ok(result);
 
-        //}
-    }
 
-        
-        
- }
+
+
+
+
+
+
 

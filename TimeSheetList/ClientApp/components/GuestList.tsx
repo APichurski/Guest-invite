@@ -6,6 +6,9 @@ interface CounterState {
 }
 
 export class GuestList extends React.Component<RouteComponentProps<{}>, CounterState> {
+
+
+
     constructor() {
         super();
         this.state = { currentCount: 0 };
