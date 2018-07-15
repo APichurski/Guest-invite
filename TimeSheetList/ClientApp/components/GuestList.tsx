@@ -1,28 +1,70 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import 'isomorphic-fetch';
 
-interface CounterState {
-    currentCount: number;
+interface FetchDataAboutGuests {
+    guests: Guest[];
+    loading: boolean;
 }
 
-export class GuestList extends React.Component<RouteComponentProps<{}>, CounterState> {
-
-
-
+export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDataAboutGuests> {
     constructor() {
         super();
-        this.state = { currentCount: 0 };
+        this.state = {
+            guests: [],
+            loading: true
+        };
+
+
+        fetch('api/guest/get-all-guest')
+            .then(response => response.json() as Promise<Guest[]>)
+            .then(data => {
+                console.log(data);
+                this.setState({
+                    guests: data,
+                    loading: false
+                });
+            });
     }
 
     public render() {
+        let contents = this.state.loading
+            ? <p><em>Loading...</em></p>
+            : GuestList.renderGuestTable(this.state.guests);
+
         return <div>
-          <h1>GuestList </h1>
+            <h1>List of all guests</h1>
+            {contents}
         </div>;
     }
 
-    incrementCounter() {
-        this.setState({
-            currentCount: this.state.currentCount + 1
-        });
+    private static renderGuestTable(guests: Guest[]) {
+        return <table className='table'>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Phone</th>
+                    <th>Will Attend?</th>
+                </tr>
+            </thead>
+            <tbody>
+                {guests.map(guest =>
+                    <tr key={guest.name}>
+                        <td>{guest.surname}</td>
+                        <td>{guest.phone}</td>
+                        <td>{guest.willAttend}</td>
+                    </tr>
+                )}
+            </tbody>
+        </table>;
     }
+}
+
+interface Guest {
+    id: Object;
+    name: string;
+    surname: string;
+    phone: string;
+    willAttend: boolean;
 }

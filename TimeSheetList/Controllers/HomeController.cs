@@ -65,15 +65,29 @@ namespace TimeSheetList.Controllers
         [HttpPost]
         public IActionResult RecevingData([FromBody]GuestResponse oneguest)
         {
-            string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("PartyCard");
+            var database = DataBaseConnection.DataBase();
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-           collection.InsertOneAsync(oneguest);
+            collection.InsertOneAsync(oneguest);
+           
             return Ok(oneguest);
         }
-
+        [Route("api/guest/get-all-guest")]
+        public async Task<IActionResult> EndpointAllGuest()
+        {
+            var database = DataBaseConnection.DataBase();
+            var collection =database.GetCollection<GuestResponse>("NumberOfguest");
+            var AllGuest =  collection.Find(b => true).ToListAsync().Result;
+            for(int i=0;i<AllGuest.Capacity;i++)
+            {
+                AllGuest[i].Id =null;
+            }
+           
+            return Ok(AllGuest);
         }
+
+
+
+    }
 
 
 }
