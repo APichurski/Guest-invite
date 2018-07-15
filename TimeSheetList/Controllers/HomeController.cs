@@ -51,7 +51,7 @@ namespace TimeSheetList.Controllers
             string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
 
 
-
+            GuestResponse ob1 = new GuestResponse { Name = "777777777" };
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("PartyCard");
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
@@ -63,25 +63,27 @@ namespace TimeSheetList.Controllers
         }
         [Route("api/2")]
         [HttpPost]
-        public IActionResult RecevingData([FromBody]GuestResponse oneguest)
+        public IActionResult RecevingData([FromBody]GuestSender oneguest)
         {
             var database = DataBaseConnection.DataBase();
-            var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-            collection.InsertOneAsync(oneguest);
+            var collection = database.GetCollection<GuestSender>("NumberOfguest");
+            collection.InsertOne(oneguest);
            
             return Ok(oneguest);
         }
+
+
         [Route("api/guest/get-all-guest")]
         public async Task<IActionResult> EndpointAllGuest()
         {
             var database = DataBaseConnection.DataBase();
-            var collection =database.GetCollection<GuestResponse>("NumberOfguest");
-            var AllGuest =  collection.Find(b => true).ToListAsync().Result;
-            for(int i=0;i<AllGuest.Capacity;i++)
+            var collection = database.GetCollection<GuestResponse>("NumberOfguest");
+            var AllGuest = collection.Find(b => true).ToListAsync().Result;
+            for (int i = 0; i < AllGuest.Capacity; i++)
             {
-                AllGuest[i].Id =null;
+                AllGuest[i].Id = null;
             }
-           
+
             return Ok(AllGuest);
         }
 

@@ -50,10 +50,11 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
             </thead>
             <tbody>
                 {guests.map(guest =>
-                    <tr key={guest.name}>
+                    <tr key={guest.phone}>
+                        <td>{ guest.name }</td>
                         <td>{guest.surname}</td>
                         <td>{guest.phone}</td>
-                        <td>{guest.willAttend}</td>
+                        <td>{JSON.stringify(guest.willAttend)}</td>
                     </tr>
                 )}
             </tbody>
@@ -65,6 +66,6 @@ interface Guest {
     id: Object;
     name: string;
     surname: string;
-    phone: string;
+    phone: number;
     willAttend: boolean;
 }
