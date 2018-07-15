@@ -26,20 +26,14 @@ namespace TimeSheetList.Controllers
         [Route("api/1")]
         public async Task<IActionResult> SearchData(string _name)
         {
-           
 
-            string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
-
-
-            
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("PartyCard");
+            var database = DataBaseConnection.DataBase();
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
            
 
             var filter = Builders<GuestResponse>.Filter.Eq("Name", _name);
-            var list = await collection.Find(new BsonDocument()).ToListAsync();
-            return Ok(list);
+            //var AllGuest = collection.Find(b => true).ToListAsync().Result;
+            return Ok(filter);
 
 
          }
