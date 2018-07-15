@@ -43,15 +43,18 @@ namespace TimeSheetList.Controllers
 
 
          }
-        [Route("api/guests/delete")]
-        public IActionResult DeleteData(GuestSender guest)
-        {                                
-            var database = DataBaseConnection.DataBase();
-            var collection = database.GetCollection<GuestSender>("NumberOfguest");
-            var filter = Builders<GuestSender>.Filter.Eq("Name",guest.Name);
-            var result = collection.DeleteMany(filter);
-            return Ok(result);
-
+        [HttpPost]
+        [Route("api/guests/remove")]
+        public IActionResult DeleteData([FromBody]GuestSender guest)
+        {
+           
+                var database = DataBaseConnection.DataBase();
+                var collection = database.GetCollection<GuestSender>("NumberOfguest");
+                var filter = Builders<GuestSender>.Filter.Eq("Name", guest.Name);
+                var result = collection.DeleteOne(filter);
+              
+                return Ok(result);
+            
 
         }
         [Route("api/2")]
@@ -72,7 +75,10 @@ namespace TimeSheetList.Controllers
             var database = DataBaseConnection.DataBase();
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
             var AllGuest = collection.Find(b => true).ToListAsync().Result;
-            for (int i = 0; i < AllGuest.Capacity; i++)
+           
+
+
+            for (int i = 0; i < AllGuest.Count; i++)
             {
                 AllGuest[i].Id = null;
             }
