@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace TimeSheetList.Models
 {
-    public class GuestResponse
+    public class GuestSender
     {
-        public Object Id { get; set; } = 2;
         [Required(ErrorMessage = "Please enter your name")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Please enter your surname")]
@@ -18,6 +16,5 @@ namespace TimeSheetList.Models
         public int Phone { get; set; }
         [Required(ErrorMessage = "Please enter your choice")]
         public bool WillAttend { get; set; }
-
     }
 }
