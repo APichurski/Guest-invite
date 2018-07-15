@@ -13,7 +13,7 @@ export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
         var surname = z.target.surname.value;
         var phone = z.target.phone.value;
         var attendace = z.target.willAttend.value == "on" ? true : false;
-        request.send('{"Name":' + name + ', "Surname":' + surname + ', "Phone":' + phone + ', "WillAttend":'+ attendace + ' }');
+        request.send('{"Name": "' + name + '", "Surname":"' + surname + '", "Phone":"' + phone + '", "WillAttend": "'+ attendace + '" }');
     }
 
     render() {
