@@ -7,6 +7,7 @@ interface FetchDataAboutGuests {
     loading: boolean;
 }
 
+var i = 0;
 
 function deleteGuest(z: any) {
 
@@ -77,7 +78,7 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
             </thead>
             <tbody>
                 {guests.map(guest =>
-                    <tr key={guest.name}>
+                    <tr  key={i++} >
                         <td>{guest.name}</td>
                         <td>{guest.surname}</td>
                         <td>{guest.phone}</td>
