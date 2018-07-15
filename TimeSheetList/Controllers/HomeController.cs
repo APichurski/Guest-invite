@@ -24,20 +24,37 @@ namespace TimeSheetList.Controllers
         }
 
         [Route("api/1")]
-        public IActionResult Test()
+        public async Task<IActionResult> SearchData(string _name)
         {
-
+           
 
             string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
 
 
-            GuestResponse ob1 = new GuestResponse { Name = "777777" };
+            
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("PartyCard");
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-            collection.InsertOneAsync(ob1);
-            return Ok(ob1);
+           
 
+            var filter = Builders<GuestResponse>.Filter.Eq("Name", _name);
+            var list = await collection.Find(new BsonDocument()).ToListAsync();
+            return Ok(list);
+
+
+         }
+        [HttpPost]
+        [Route("api/guests/remove")]
+        public IActionResult DeleteData([FromBody]GuestSender guest)
+        {
+           
+                var database = DataBaseConnection.DataBase();
+                var collection = database.GetCollection<GuestSender>("NumberOfguest");
+                var filter = Builders<GuestSender>.Filter.Eq("Name", guest.Name);
+                var result = collection.DeleteOne(filter);
+              
+                return Ok(result);
+            
 
         }
         [Route("api/2")]
@@ -58,7 +75,10 @@ namespace TimeSheetList.Controllers
             var database = DataBaseConnection.DataBase();
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
             var AllGuest = collection.Find(b => true).ToListAsync().Result;
-            for (int i = 0; i < AllGuest.Capacity; i++)
+           
+
+
+            for (int i = 0; i < AllGuest.Count; i++)
             {
                 AllGuest[i].Id = null;
             }

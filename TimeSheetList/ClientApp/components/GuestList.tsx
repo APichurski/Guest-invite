@@ -4,8 +4,34 @@ import 'isomorphic-fetch';
 
 interface FetchDataAboutGuests {
     guests: Guest[];
-    loading: boolean;
+    loading: boolean
+   
 }
+
+var i = 0;
+
+function deleteGuest(z: any) {
+
+    z = z.target.parentElement.parentNode.children;
+
+    var name = z[0].innerText;
+    var surname = z[1].innerText;
+    var phone = z[2].innerText;
+    var attendace = z[3].innerText == "true" ? true : false;
+
+    
+
+    var request = new XMLHttpRequest();
+    request.open('POST', '/api/guests/remove', true);
+    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+
+ 
+
+    request.send('{"Name":"' + name + '", "Surname":"' + surname + '", "Phone":"' + phone + '", "WillAttend":"' + attendace + '" }');
+    
+}
+
 
 export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDataAboutGuests> {
     constructor() {
@@ -13,6 +39,7 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
         this.state = {
             guests: [],
             loading: true
+          
         };
 
 
@@ -46,15 +73,17 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
                     <th>Surname</th>
                     <th>Phone</th>
                     <th>Will Attend?</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 {guests.map(guest =>
-                    <tr key={guest.phone}>
-                        <td>{ guest.name }</td>
+                    <tr  key={i++} >
+                        <td>{guest.name}</td>
                         <td>{guest.surname}</td>
                         <td>{guest.phone}</td>
                         <td>{JSON.stringify(guest.willAttend)}</td>
+                        <td><button type="button" onClick={deleteGuest} className="btn btn-danger glyphicon glyphicon-trash"></button></td>
                     </tr>
                 )}
             </tbody>
@@ -66,6 +95,6 @@ interface Guest {
     id: Object;
     name: string;
     surname: string;
-    phone: number;
+    phone: string;
     willAttend: boolean;
 }
