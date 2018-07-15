@@ -15,9 +15,11 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
             loading: true
         };
 
+
         fetch('api/guest/get-all-guest')
             .then(response => response.json() as Promise<Guest[]>)
             .then(data => {
+                console.log(data);
                 this.setState({
                     guests: data,
                     loading: false
@@ -60,6 +62,7 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
 }
 
 interface Guest {
+    id: Object;
     name: string;
     surname: string;
     phone: string;
