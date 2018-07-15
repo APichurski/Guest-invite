@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using TimeSheetList.Models;
 
@@ -25,7 +26,7 @@ namespace TimeSheetList.Controllers
         [Route("api/1")]
         public IActionResult Test()
         {
-           
+
 
             string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
 
@@ -38,20 +39,30 @@ namespace TimeSheetList.Controllers
             return Ok(ob1);
 
 
-         }
+        }
         [Route("api/2")]
         [HttpPost]
         public IActionResult RecevingData([FromBody]GuestResponse oneguest)
         {
-            string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("PartyCard");
+            var database = DataBaseConnection.DataBase();
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-           collection.InsertOneAsync(oneguest);
+            collection.InsertOneAsync(oneguest);
+           
             return Ok(oneguest);
         }
+        [Route("api/guest/get-all-guest")]
+        [HttpPost]
+        public IActionResult EndpointAllGuest()
+        {
+            var database = DataBaseConnection.DataBase();
+            var collection = database.GetCollection<GuestResponse>("NumberOfguest");
+            var AllGuest = collection.Find(b =>  true);
+            
 
+            return Ok(AllGuest);
         }
+
+    }
 
 
 }
