@@ -16,8 +16,7 @@ namespace TimeSheetList
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
-            var client = new MongoClient();
-            var database = client.GetDatabase("PartyCard");
+          
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
