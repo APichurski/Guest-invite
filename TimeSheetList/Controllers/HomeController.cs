@@ -43,19 +43,12 @@ namespace TimeSheetList.Controllers
 
 
          }
-        [Route("api/3")]
-        public IActionResult DeleteData(string _name = "Kamil")
-        {
-
-
-            string connectionString = "mongodb+srv://admin:admin@cluster0-s6j4s.mongodb.net/test?retryWrites=true";
-
-
-            GuestResponse ob1 = new GuestResponse { Name = "777777777" };
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("PartyCard");
-            var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-            var filter = Builders<GuestResponse>.Filter.Eq("Name", "Kamil");
+        [Route("api/guests/delete")]
+        public IActionResult DeleteData(GuestSender guest)
+        {                                
+            var database = DataBaseConnection.DataBase();
+            var collection = database.GetCollection<GuestSender>("NumberOfguest");
+            var filter = Builders<GuestSender>.Filter.Eq("Name",guest.Name);
             var result = collection.DeleteMany(filter);
             return Ok(result);
 
