@@ -41,25 +41,49 @@ namespace TimeSheetList.Controllers
         [Route("api/guests/remove")]
         public IActionResult DeleteData([FromBody]GuestSender guest)
         {
-           
+            try
+            {
                 var database = DataBaseConnection.DataBase();
                 var collection = database.GetCollection<GuestSender>("NumberOfguest");
                 var filter = Builders<GuestSender>.Filter.Eq("Name", guest.Name);
                 var result = collection.DeleteOne(filter);
-              
                 return Ok(result);
+            }
+            catch(ArgumentNullException ex)
+            {
+                return Ok(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Ok("Unhandled exception");
+            }
             
+
+
+
 
         }
         [Route("api/2")]
         [HttpPost]
         public IActionResult RecevingData([FromBody]GuestSender oneguest)
         {
-            var database = DataBaseConnection.DataBase();
-            var collection = database.GetCollection<GuestSender>("NumberOfguest");
-            collection.InsertOne(oneguest);
-           
-            return Ok(oneguest);
+            
+            try
+            {
+                var database = DataBaseConnection.DataBase();
+                var collection = database.GetCollection<GuestSender>("NumberOfguest");
+                collection.InsertOne(oneguest);
+
+                return Ok("Successfully add into database");
+            }
+            catch (ArgumentNullException ex)
+            {
+                return Ok(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Ok("Unhandled exception");
+            }
         }
 
 
