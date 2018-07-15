@@ -11,8 +11,6 @@ interface FetchDataAboutGuests {
 var i = 0;
 
 
-
-
 export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDataAboutGuests> {
     constructor() {
         super();
