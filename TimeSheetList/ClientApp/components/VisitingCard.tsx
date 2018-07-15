@@ -4,18 +4,18 @@ import { RouteComponentProps } from 'react-router';
 export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
 
     wypelnijCos(z: any) {
-
-        z = z.target.parentElement;
+        var dataFromForm;
+        dataFromForm = z.target.parentElement;
 
         var request = new XMLHttpRequest();
         request.open('POST', '/api/2', true);
         request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        var name = z.name.value;
-        var surname = z.surname.value;
-        var phone = z.phone.value;
-        var attendace = z.willAttend.value == "on" ? true : false;
+        var name = dataFromForm.name.value;
+        var surname = dataFromForm.surname.value;
+        var phone = dataFromForm.phone.value;
+        var attendace = dataFromForm.willAttend.value == "on" ? true : false;
 
-        //z.target.reset();
+        z.target.parentElement.reset();
 
         request.onload = function () {
             // do something to response
