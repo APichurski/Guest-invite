@@ -51,16 +51,20 @@ namespace TimeSheetList.Controllers
             return Ok(oneguest);
         }
         [Route("api/guest/get-all-guest")]
-        [HttpPost]
-        public IActionResult EndpointAllGuest()
+        public async Task<IActionResult> EndpointAllGuest()
         {
             var database = DataBaseConnection.DataBase();
-            var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-            var AllGuest = collection.Find(b =>  true);
-            
-
+            var collection =database.GetCollection<GuestResponse>("NumberOfguest");
+            var AllGuest =  collection.Find(b => true).ToListAsync().Result;
+            for(int i=0;i<AllGuest.Capacity;i++)
+            {
+                AllGuest[i].Id =null;
+            }
+           
             return Ok(AllGuest);
         }
+
+
 
     }
 
