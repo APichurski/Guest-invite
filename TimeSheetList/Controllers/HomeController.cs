@@ -51,27 +51,20 @@ namespace TimeSheetList.Controllers
             return Ok(oneguest);
         }
         [Route("api/guest/get-all-guest")]
-        public async Task<String> EndpointAllGuest()
+        public async Task<IActionResult> EndpointAllGuest()
         {
             var database = DataBaseConnection.DataBase();
-            var output = "";
-            var collection = database.GetCollection<BsonDocument>("NumberOfguest");
-            using (IAsyncCursor<BsonDocument> cursor = await collection.FindAsync(new BsonDocument()))
+            var collection =database.GetCollection<GuestResponse>("NumberOfguest");
+            var AllGuest =  collection.Find(b => true).ToListAsync().Result;
+            for(int i=0;i<AllGuest.Capacity;i++)
             {
-                while (await cursor.MoveNextAsync())
-                {
-                    IEnumerable<BsonDocument> batch = cursor.Current;
-                    foreach (BsonDocument document in batch)
-                    {
-
-                        output += document;
-                    }
-                }
+                AllGuest[i].Id =null;
             }
-
-
-            return output;
+           
+            return Ok(AllGuest);
         }
+
+
 
     }
 
