@@ -22,18 +22,19 @@ namespace TimeSheetList.Controllers
             ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
             return View();
         }
-
+        [HttpGet]
         [Route("api/1")]
-        public async Task<IActionResult> SearchData(string _name)
+        public async Task<IActionResult> SearchData([FromQuery]string name)
         {
 
             var database = DataBaseConnection.DataBase();
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
-           
-
-            var filter = Builders<GuestResponse>.Filter.Eq("Name", _name);
-            //var AllGuest = collection.Find(b => true).ToListAsync().Result;
-            return Ok(filter);
+            var filter = Builders<GuestResponse>.Filter.Eq("Name", name);
+            var AllGuest = await collection.Find(filter).ToListAsync();
+            for (int i = 0; i < AllGuest.Count; i++)
+                     AllGuest[i].Id = null;
+            
+            return Ok(AllGuest);
 
 
          }
