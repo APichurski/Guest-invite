@@ -4,58 +4,52 @@ import 'isomorphic-fetch';
 
 var i = 0;
 
-export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDataAboutGuests> {
+export class SearchGuest extends React.Component<RouteComponentProps<{}>, FetchDataAboutGuests> {
+
     constructor() {
         super();
         this.state = {
             guests: [],
-            loading: true
+            loading: true,
+            name: ""
         };
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.fetchDataFromServer = this.fetchDataFromServer.bind(this);
     }
 
-    componentDidMount() {
-        this.fetchDataFromServer();
-    }
 
     private fetchDataFromServer() {
-
-        fetch('api/guest/get-all-guest')
+        const uri = 'api/guest/find=' + this.state.name;
+        fetch(uri)
             .then(response => response.json() as Promise<Guest[]>)
             .then(data => {
-                console.log(data);
                 this.setState({
                     guests: data,
                     loading: false
                 });
             });
-
     }
 
-
-    private static deleteGuest(z: any) {
-
-        var containerWithElements = z.target.parentElement.parentNode.children;
-        var name = containerWithElements[0].innerText;
-        var surname = containerWithElements[1].innerText;
-        var phone = containerWithElements[2].innerText;
-        var attendace = containerWithElements[3].innerText == "true" ? true : false;
-        var request = new XMLHttpRequest();
-
-        request.open('POST', '/api/guests/remove', true);
-        request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-        request.send('{"Name":"' + name + '", "Surname":"' + surname + '", "Phone":"' + phone + '", "WillAttend":"' + attendace + '" }');
-        z.target.parentElement.parentNode.remove();
+    handleNameChange(e: any) {
+        this.setState({
+            name: e.target.value
+        });
     }
-
-
 
     public render() {
         let contents = this.state.loading
-            ? <p><em>Loading...</em></p>
-            : GuestList.renderGuestTable(this.state.guests);
+            ? <p><em>Type search to find guest with specified name</em></p>
+            : SearchGuest.renderGuestTable(this.state.guests);
 
         return <div>
-            <h1>List of all guests</h1>
+            <h1>Search guest</h1>
+            <form>
+                <div className="form-group">
+                    <label>Name:</label>
+                    <input type="text" onChange={this.handleNameChange} className="form-control" id="name" />
+                </div>
+                <button type="button" onClick={this.fetchDataFromServer} className="btn btn-default">Submit</button>
+            </form>
             {contents}
         </div>;
     }
@@ -68,7 +62,6 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
                     <th>Surname</th>
                     <th>Phone</th>
                     <th>Will Attend?</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -78,7 +71,6 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
                         <td>{guest.surname}</td>
                         <td>{guest.phone}</td>
                         <td>{JSON.stringify(guest.willAttend)}</td>
-                        <td><button type="button" onClick={this.deleteGuest} className="btn btn-danger glyphicon glyphicon-trash"></button></td>
                     </tr>
                 )}
             </tbody>
@@ -96,5 +88,7 @@ interface Guest {
 
 interface FetchDataAboutGuests {
     guests: Guest[];
-    loading: boolean
+    loading: boolean,
+    name: string
 }
+

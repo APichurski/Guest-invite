@@ -1,9 +1,17 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Ref } from 'react';
+
+
 
 export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
 
-    wypelnijCos(z: any) {
+    static ButtonForModal1: any;
+    constructor(props: any) {
+        super(props);
+    }
+
+    sendGuesttoServer(z: any) {
         var dataFromForm;
         dataFromForm = z.target.parentElement;
 
@@ -15,12 +23,18 @@ export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
         var phone = dataFromForm.phone.value;
         var attendace = dataFromForm.willAttend.value == "on" ? true : false;
 
-        z.target.parentElement.reset();
+        //console.log(z.target.parentElement[5].Click);
+        //request.onload = function() {
+        //    z.target.parentElement[5].Click();
+        //    console.log("adsads");
+        //    z.target.parentElement.reset();
+        //}
 
-        request.onload = function () {
-            // do something to response
+        request.onload = () => {
             console.log(request.responseText);
-        };
+        }
+
+  
 
 
 
@@ -50,8 +64,9 @@ export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
                     <div className="checkbox">
                         <label><input type="checkbox" id="willAttend" /> I want to come to party!</label>
                     </div>
-                    <button type="button" onClick={this.wypelnijCos} className="btn btn-default" data-toggle="modal" data-target="#exampleModal">Submit</button>
+                    <button type="button" onClick={this.sendGuesttoServer} className="btn btn-default" data-toggle="modal" data-target="#exampleModal">Submit</button>
                 </form>
+       
 
                 <div className="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
@@ -63,8 +78,8 @@ export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                Sucsesfully add new client to database!
-      </div>
+                                <span id="ResultModalForGuest">Successfuly executed submit</span>
+                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
