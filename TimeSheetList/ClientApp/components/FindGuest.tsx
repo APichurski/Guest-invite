@@ -19,7 +19,7 @@ export class SearchGuest extends React.Component<RouteComponentProps<{}>, FetchD
 
 
     private fetchDataFromServer() {
-        const uri = 'api/guest/find=' + this.state.name;
+        const uri = 'api/guest/?find=' + this.state.name;
         fetch(uri)
             .then(response => response.json() as Promise<Guest[]>)
             .then(data => {

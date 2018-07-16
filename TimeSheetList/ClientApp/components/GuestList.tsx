@@ -77,7 +77,7 @@ export class GuestList extends React.Component<RouteComponentProps<{}>, FetchDat
                         <td>{guest.name}</td>
                         <td>{guest.surname}</td>
                         <td>{guest.phone}</td>
-                        <td>{JSON.stringify(guest.willAttend)}</td>
+                        <td>{guest.willAttend?"Will attend":"Will not attend"}</td>
                         <td><button type="button" onClick={this.deleteGuest} className="btn btn-danger glyphicon glyphicon-trash"></button></td>
                     </tr>
                 )}

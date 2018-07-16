@@ -16,7 +16,7 @@ export class VisitingCard extends React.Component<RouteComponentProps<{}>, {}> {
         dataFromForm = z.target.parentElement;
 
         var request = new XMLHttpRequest();
-        request.open('POST', '/api/2', true);
+        request.open('POST', '/api/guests/add', true);
         request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         var name = dataFromForm.name.value;
         var surname = dataFromForm.surname.value;
