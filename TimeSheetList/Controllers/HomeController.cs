@@ -22,41 +22,47 @@ namespace TimeSheetList.Controllers
             ViewData["RequestId"] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
             return View();
         }
-
+      
         [Route("api/1")]
-        public async Task<IActionResult> SearchData(string _name)
+        public async Task<IActionResult> SearchData([FromQuery]GuestSender guest)
         {
 
             var database = DataBaseConnection.DataBase();
             var collection = database.GetCollection<GuestResponse>("NumberOfguest");
            
 
-            var filter = Builders<GuestResponse>.Filter.Eq("Name", _name);
-            //var AllGuest = collection.Find(b => true).ToListAsync().Result;
-            return Ok(filter);
+            var filter = Builders<GuestResponse>.Filter.Eq("Name",guest.Name);
+            var AllGuest = collection.Find(filter).ToListAsync().Result;
+            for (int i = 0; i < AllGuest.Count; i++)
+            {
+                AllGuest[i].Id = null;
+            }
+            return Ok(AllGuest);
 
 
          }
+
+
+
+
+
+
+
+
+
+
+
         [HttpPost]
         [Route("api/guests/remove")]
         public IActionResult DeleteData([FromBody]GuestSender guest)
         {
-            try
-            {
+            
                 var database = DataBaseConnection.DataBase();
                 var collection = database.GetCollection<GuestSender>("NumberOfguest");
                 var filter = Builders<GuestSender>.Filter.Eq("Name", guest.Name);
                 var result = collection.DeleteOne(filter);
                 return Ok(result);
-            }
-            catch(ArgumentNullException ex)
-            {
-                return Ok(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return Ok("Unhandled exception");
-            }
+
             
 
 
