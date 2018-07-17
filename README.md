@@ -2,7 +2,7 @@
 
 
 This is simple invitation maker which let you:
-  - Sing in in visiting card to join party or not
+  - Sign in in visiting card to join party or not
   - See list with all guest
   - - removing specified guest from database 
   - search guests by Name
@@ -11,15 +11,16 @@ This is simple invitation maker which let you:
 
 Simple invitation maker uses a number of open source projects to work properly:
 
+* [[Mongodb]] -NoSQL database to store guests
 * [ReactJS.NET] - makes it easier to use Facebook's React and JSX from C# and other .NET languages, focusing specifically on ASP.NET MVC !
 * [ASP.NET] -  It is a modular framework that runs on both the full .NET Framework, on Windows, and the cross-platform .NET Core.
+* [C# 7.0] - To maintain server, connect to database
 * [[Bootstrap]] - Build responsive, mobile-first projects on the web with the world's most popular front-end component library.
 * [[Node.js]] - evented I/O for the backend
-* [Javascript] -to send data over XMLhttpRequest and fetching data
+* [[Javascript]] -to send data over XMLhttpRequest and fetching data
 
 
-
-### Depedencies
+### Dependencies
  Install https://reactjs.net/ to run it properly.
 
 
@@ -36,4 +37,4 @@ Simple invitation maker uses a number of open source projects to work properly:
    [Javascript]: <https://www.javascript.com/>
    [ReactJS]: <https://reactjs.net/>
    [Gulp]: <http://gulpjs.com>
-
+   [Mongodb]: <https://www.mongodb.com/>
